@@ -1,5 +1,7 @@
 package com.example.sw03_app;
 
+import android.content.Intent;
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -15,8 +17,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String keyhash = Utility.INSTANCE.getKeyHash(this);
-        System.out.println("Key Hash: " + keyhash);
+        Intent intent = new Intent(MainActivity.this, SeatReservationActivity.class);
+        startActivity(intent);
+
     }
 
 }

@@ -49,7 +49,6 @@ public class UserLocationManager {
 
 
     public void stopLocationUpdates() {
-
         locationManager.removeUpdates(locationListener);
     }
 
