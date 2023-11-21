@@ -1,6 +1,7 @@
 package com.example.sw03_app;
 
 import android.app.Application;
+import android.view.View;
 
 import com.kakao.sdk.common.KakaoSdk;
 
