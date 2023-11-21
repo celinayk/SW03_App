@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-<<<<<<< HEAD
-=======
     private void getHashKey() {
         String keyhash = Utility.INSTANCE.getKeyHash(this);
         System.out.println("Key Hash: " + keyhash);
@@ -70,5 +68,4 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
->>>>>>> 79ad567065469b704c562f5604ba73dc50da284d
 }
