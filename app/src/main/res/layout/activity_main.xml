@@ -20,20 +20,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Reserve Seat"
+            app:layout_constraintBottom_toTopOf="@id/delete_board"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="onClickButtonReservationBtn" />
+    />
+
+    <Button
+            android:id="@+id/delete_board"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="게시물 삭제"
             app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="onClickButtonDeleteBtn" />
+    />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 
 
