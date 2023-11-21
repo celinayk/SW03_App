@@ -18,6 +18,7 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
 
+
 public class MyInformationFragment extends Fragment {
 
     private View loginButton, logoutButton;
@@ -47,7 +48,7 @@ public class MyInformationFragment extends Fragment {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
                 if (oAuthToken != null) {
-                    // TBO
+                    System.out.println("oAuthToken : " + oAuthToken.getAccessToken());
                 }
                 if (throwable != null) {
                     // TBO
