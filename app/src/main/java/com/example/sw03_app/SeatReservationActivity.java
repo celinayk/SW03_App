@@ -61,6 +61,7 @@ public class SeatReservationActivity extends AppCompatActivity {
                         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                         Location currentLocation = userLocationManager.getLastKnownLocation(SeatReservationActivity.this);
 
+                        System.out.println(currentLocation.getLatitude() + "," + currentLocation.getLongitude());
                         if (currentLocation != null) {
                             float distance = currentLocation.distanceTo(libraryLocation);
                             //오차범위 포함 + 10미터
