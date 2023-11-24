@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".YesReservation">
+    tools:context=".NoReservation">
 
 
     <LinearLayout
@@ -33,6 +33,7 @@
                 app:rippleColor="#00FFFFFF"
                 app:srcCompat="@drawable/baseline_arrow_back_ios_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,17 +85,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
-                    android:layout_gravity="bottom"
                     android:text="좌석번호 : "
                     android:textSize="30dp">
                 </TextView>
                 <TextView
-                    android:id="@+id/seatNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="번호(동적) "
-                    android:textSize="30dp"
-                    android:layout_gravity="bottom">
+                    android:textSize="30dp">
                 </TextView>
             </LinearLayout>
 
@@ -106,47 +104,26 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
                     android:layout_gravity="top"
-                    android:text="남은시간 : "
+                    android:text="예약가능 : "
                     android:textSize="30dp">
                 </TextView>
                 <TextView
-                    android:id="@+id/remainingTime"
+                    android:id="@+id/ableReservationTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="(동적시간) "
-                    android:textSize="30dp"
-                    android:layout_gravity="top">
+                    android:text="(동적시간)"
+                    android:textSize="30dp">
                 </TextView>
-
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/reservationBtn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_margin="10dp">
-
-                <Button
-                    android:id="@+id/extendBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="연장"
-                    android:layout_margin="10dp"/>
-
-                <Button
-                    android:id="@+id/cancelBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="취소"
-                    android:layout_margin="10dp"/>
-            </LinearLayout>
-
+                android:text="예약"
+                android:layout_margin="20dp" />
 
         </LinearLayout>
-
-
-
 
 
 
@@ -164,3 +141,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
