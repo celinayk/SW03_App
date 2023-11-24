@@ -31,11 +31,12 @@ public class ViewSeat extends AppCompatActivity {
             seatBtns[i - 1].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), noReservation.class);
+                    Intent intent = new Intent(getApplicationContext(), NoReservation.class);
                     startActivity(intent);
                     /* 서버 - 좌석을 누르면 회원의 아이디로 회원의 예약좌석 정보를 조회해야한다.
                     조회하고 좌석예약정보가 이미 존재하면, yesReservation실행
                                        존재하지 않으면, noReservation실행
+                    원래는 위에 처럼 동작해야하는데, 일단 잘 돌아가는지 보여주기 위해서 NoReservation과 연결해뒀습니다.
                      */
                 }
             });
