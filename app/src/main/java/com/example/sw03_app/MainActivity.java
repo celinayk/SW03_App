@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -16,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     Fragment homeFragment, spotFragment, settingFragment;
     BottomNavigationView bottomNavigationView;
+    Button seatViewBtn; //'좌석조회'버튼
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         initLayout();
 
         getHashKey();
+
+        viewSeat(); //좌석조회관련 함수
 
     }
 
@@ -66,6 +73,21 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    //좌석 조회 코드들. home에서 좌석 조회 버튼을 클릭하면, 좌석현황을 보여주는 화면으로 넘어간다.)
+    private void viewSeat() {
+        seatViewBtn = (Button)findViewById(R.id.seatViewBtn); //자리 조회 버튼 객체 생성
+        //좌석 조회 버튼을 클릭하면,ViewSeat실행
+        seatViewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ViewSeat.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
 }
