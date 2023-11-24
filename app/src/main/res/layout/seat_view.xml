@@ -1,0 +1,1072 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!--시작-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity"><!--이부분은 수정-->
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="3"
+                    android:orientation="horizontal"> <!-- 세로로 4등분-->
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"> <!--세로1-->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="5"> <!--세로1에서 가로를 3등분-->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"> <!-- 세로1 가로1-->
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/redoButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0"
+                                    android:contentDescription="@null"
+                                    android:tint="#000000"
+                                    app:backgroundTint="#00FF0000"
+                                    app:elevation="0dp"
+                                    app:fabSize="auto"
+                                    app:rippleColor="#00FFFFFF"
+                                    app:srcCompat="@drawable/ic_baseline_clear_24"
+                                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:orientation="horizontal"
+                                android:layout_weight="2"> <!-- 세로1 가로2-->
+                                <TableLayout
+                                    android:layout_margin="20dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"> <!--세로1 가로2의 세로1-->
+                                    <TableRow>
+                                        <Button
+                                            android:id="@+id/seat1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="1"/>
+                                    </TableRow>
+                                    <TableRow/>
+                                    <TableRow>
+                                        <Button
+                                            android:id="@+id/seat2"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="2"/>
+                                    </TableRow>
+                                    <TableRow>
+                                        <Button
+                                            android:id="@+id/seat3"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="3"/>
+                                    </TableRow>
+                                </TableLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"> <!--세로1 가로2의 세로2-->
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"> <!--세로1 가로2의 세로2 상반-->
+                                        <TableLayout
+                                            android:layout_margin="5dp"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"> <!--세로1 가로2의 세로2 상반의 왼쪽-->
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat7"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="7" />
+
+                                                <Button
+                                                    android:id="@+id/seat12"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="12" />
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat8"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="8" />
+                                                <Button
+                                                    android:id="@+id/seat11"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="11" />
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat9"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="9" />
+                                                <Button
+                                                    android:id="@+id/seat10"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="10" />
+                                            </TableRow>
+                                        </TableLayout>
+
+                                        <TableLayout
+                                            android:layout_margin="5dp"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"> <!--세로1 가로2의 세로2 상반의 중간-->
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat19"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="19" />
+
+                                                <Button
+                                                    android:id="@+id/seat24"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="24" />
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat20"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="20" />
+                                                <Button
+                                                    android:id="@+id/seat23"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="23" />
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat21"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="21" />
+                                                <Button
+                                                    android:id="@+id/seat22"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="22" />
+                                            </TableRow>
+                                        </TableLayout>
+
+                                        <TableLayout
+                                            android:layout_margin="5dp"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"> <!--세로1 가로2의 세로2 상반의 오른쪽-->
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat31"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="31" />
+
+                                                <Button
+                                                    android:id="@+id/seat36"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="36" />
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat32"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="32" />
+                                                <Button
+                                                    android:id="@+id/seat35"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="35" />
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat33"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="33" />
+                                                <Button
+                                                    android:id="@+id/seat34"
+                                                    android:layout_weight="1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="34" />
+                                            </TableRow>
+                                        </TableLayout>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"> <!--세로1 가로2의 세로2 하반-->
+                                        <TableLayout
+                                            android:layout_margin="5dp"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"> <!--세로1 가로2의 세로2 하반의 왼쪽-->
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat13"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="13"
+                                                    android:layout_weight="1"/>
+
+                                                <Button
+                                                    android:id="@+id/seat18"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="18"
+                                                    android:layout_weight="1"/>
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat14"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="14"
+                                                    android:layout_weight="1"/>
+                                                <Button
+                                                    android:id="@+id/seat17"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="17"
+                                                    android:layout_weight="1"/>
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat15"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="15"
+                                                    android:layout_weight="1"/>
+                                                <Button
+                                                    android:id="@+id/seat16"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="16"
+                                                    android:layout_weight="1"/>
+                                            </TableRow>
+                                        </TableLayout>
+
+                                        <TableLayout
+                                            android:layout_margin="5dp"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"> <!--세로1 가로2의 세로2 하반의 중간-->
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat25"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="25"
+                                                    android:layout_weight="1"/>
+
+                                                <Button
+                                                    android:id="@+id/seat30"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="30"
+                                                    android:layout_weight="1"/>
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat26"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="26"
+                                                    android:layout_weight="1"/>
+                                                <Button
+                                                    android:id="@+id/seat29"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="29"
+                                                    android:layout_weight="1"/>
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat27"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="27"
+                                                    android:layout_weight="1"/>
+                                                <Button
+                                                    android:id="@+id/seat28"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="28"
+                                                    android:layout_weight="1"/>
+                                            </TableRow>
+                                        </TableLayout>
+
+                                        <TableLayout
+                                            android:layout_margin="5dp"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"> <!--세로1 가로2의 세로2 하반의 오른쪽-->
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat37"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="37"
+                                                    android:layout_weight="1"/>
+
+                                                <Button
+                                                    android:id="@+id/seat42"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="42"
+                                                    android:layout_weight="1"/>
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat38"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="38"
+                                                    android:layout_weight="1"/>
+                                                <Button
+                                                    android:id="@+id/seat41"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="41"
+                                                    android:layout_weight="1"/>
+                                            </TableRow>
+                                            <TableRow
+                                                android:layout_weight="1">
+                                                <Button
+                                                    android:id="@+id/seat39"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="39"
+                                                    android:layout_weight="1"/>
+                                                <Button
+                                                    android:id="@+id/seat40"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="40"
+                                                    android:layout_weight="1"/>
+                                            </TableRow>
+                                        </TableLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:orientation="horizontal"
+                                android:layout_weight="2"> <!--세로1 가로3-->
+                                <TableLayout
+                                    android:layout_margin="20dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"> <!--세로1 가로3의 세로1-->
+                                    <TableRow>
+                                        <Button
+                                            android:id="@+id/seat4"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="4"/>
+                                    </TableRow>
+                                    <TableRow>
+                                        <Button
+                                            android:id="@+id/seat5"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="5"/>
+                                    </TableRow>
+                                    <TableRow>
+                                        <Button
+                                            android:id="@+id/seat6"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="6"/>
+                                    </TableRow>
+                                </TableLayout>
+
+                                <TableLayout
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"> <!--세로1 가로3의 세로2-->
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat43"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="43" />
+
+                                        <Button
+                                            android:id="@+id/seat47"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="47" />
+                                    </TableRow>
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat44"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="44" />
+                                        <Button
+                                            android:id="@+id/seat48"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="48" />
+                                    </TableRow>
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat45"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="45" />
+                                        <Button
+                                            android:id="@+id/seat49"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="49" />
+                                    </TableRow>
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat46"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="46" />
+                                        <Button
+                                            android:id="@+id/seat50"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="50" />
+                                    </TableRow>
+                                </TableLayout>
+
+                                <TableLayout
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"> <!--세로1 가로3의 세로3-->
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat51"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="51" />
+
+                                        <Button
+                                            android:id="@+id/seat55"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="55" />
+                                    </TableRow>
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat52"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="52" />
+                                        <Button
+                                            android:id="@+id/seat56"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="56" />
+                                    </TableRow>
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat53"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="53" />
+                                        <Button
+                                            android:id="@+id/seat57"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="57" />
+                                    </TableRow>
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat54"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="54" />
+                                        <Button
+                                            android:id="@+id/seat58"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="58" />
+                                    </TableRow>
+                                </TableLayout>
+
+                                <TableLayout
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"> <!--세로1 가로3의 세로4-->
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat59"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="59" />
+
+                                        <Button
+                                            android:id="@+id/seat63"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="63" />
+                                    </TableRow>
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat60"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="60" />
+                                        <Button
+                                            android:id="@+id/seat64"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="64" />
+                                    </TableRow>
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat61"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="61" />
+                                        <Button
+                                            android:id="@+id/seat65"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="65" />
+                                    </TableRow>
+                                    <TableRow
+                                        android:layout_weight="1">
+                                        <Button
+                                            android:id="@+id/seat62"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="62" />
+                                        <Button
+                                            android:id="@+id/seat66"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="66" />
+                                    </TableRow>
+                                </TableLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:weightSum="3"> <!--세로2-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"> <!--세로2의 1-->
+                            <LinearLayout
+                                android:layout_margin="20dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="right"><!--세로2-1 -->
+                                <Button
+                                    android:id="@+id/seat67"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="67" />
+                                <Button
+                                    android:id="@+id/seat68"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="68" />
+                                <Button
+                                    android:id="@+id/seat69"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="69" />
+                                <Button
+                                    android:id="@+id/seat70"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="70" />
+                                <Button
+                                    android:id="@+id/seat71"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="71" />
+                                <Button
+                                    android:id="@+id/seat72"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="72" />
+                                <Button
+                                    android:id="@+id/seat73"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="73" />
+                                <Button
+                                    android:id="@+id/seat74"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="74" />
+                                <Button
+                                    android:id="@+id/seat75"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="75" />
+                                <Button
+                                    android:id="@+id/seat76"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="76" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical"
+                            android:weightSum="5"> <!--세로2의 세로2-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="3"></LinearLayout> <!--세로2의 2의 가로1-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="2"> <!--세로2의 2의 가로2-->
+                                <Button
+                                    android:id="@+id/seat77"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="77" />
+
+                                <Button
+                                    android:id="@+id/seat78"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="78" />
+
+                                <Button
+                                    android:id="@+id/seat79"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="79" />
+
+                                <Button
+                                    android:id="@+id/seat80"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="80" />
+
+                                <Button
+                                    android:id="@+id/seat81"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="81" />
+
+                                <Button
+                                    android:id="@+id/seat82"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="82" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="3"> <!--세로3-->
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"> <!--세로3 가로1-->
+                            <TableLayout
+                                android:layout_margin="20dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TableRow>
+                                    <Button
+                                        android:id="@+id/seat99"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="99" />
+
+                                    <Button
+                                        android:id="@+id/seat106"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="106" />
+                                </TableRow>
+                                <TableRow>
+                                    <Button
+                                        android:id="@+id/seat100"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="100" />
+                                    <Button
+                                        android:id="@+id/seat107"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="107" />
+                                </TableRow>
+                                <TableRow>
+                                    <Button
+                                        android:id="@+id/seat101"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="101" />
+                                    <Button
+                                        android:id="@+id/seat108"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="108" />
+                                </TableRow>
+                                <TableRow>
+                                    <Button
+                                        android:id="@+id/seat102"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="102" />
+                                    <Button
+                                        android:id="@+id/seat109"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="109" />
+                                </TableRow>
+                                <TableRow>
+                                    <Button
+                                        android:id="@+id/seat103"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="103" />
+                                    <Button
+                                        android:id="@+id/seat110"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="110" />
+                                </TableRow>
+                                <TableRow>
+                                    <Button
+                                        android:id="@+id/seat104"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="104" />
+                                    <Button
+                                        android:id="@+id/seat111"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="111" />
+                                </TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_margin="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:gravity="bottom"> <!--세로3 가로2-->
+                            <TableLayout
+                                android:layout_margin="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"> <!--세로3 가로2 1-->
+                                <TableRow
+                                    android:layout_weight="1">
+                                    <Button
+                                        android:id="@+id/seat83"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="83" />
+
+                                    <Button
+                                        android:id="@+id/seat85"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="85" />
+                                </TableRow>
+                                <TableRow
+                                    android:layout_weight="1">
+                                    <Button
+                                        android:id="@+id/seat84"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="84" />
+                                    <Button
+                                        android:id="@+id/seat86"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="86" />
+                                </TableRow>
+                            </TableLayout>
+
+                            <TableLayout
+                                android:layout_margin="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"> <!--세로3 가로2 2-->
+                                <TableRow
+                                    android:layout_weight="1">
+                                    <Button
+                                        android:id="@+id/seat87"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="87" />
+
+                                    <Button
+                                        android:id="@+id/seat89"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="89" />
+                                </TableRow>
+                                <TableRow
+                                    android:layout_weight="1">
+                                    <Button
+                                        android:id="@+id/seat88"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="88" />
+                                    <Button
+                                        android:id="@+id/seat90"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="90" />
+                                </TableRow>
+                            </TableLayout>
+
+                            <TableLayout
+                                android:layout_margin="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"> <!--세로3 가로2 3-->
+                                <TableRow
+                                    android:layout_weight="1">
+                                    <Button
+                                        android:id="@+id/seat91"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="91" />
+
+                                    <Button
+                                        android:id="@+id/seat93"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="93" />
+                                </TableRow>
+                                <TableRow
+                                    android:layout_weight="1">
+
+                                    <Button
+                                        android:id="@+id/seat92"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="92" />
+
+                                    <Button
+                                        android:id="@+id/seat94"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="94" />
+                                </TableRow>
+                            </TableLayout>
+
+                            <TableLayout
+                                android:layout_margin="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"> <!--세로3 가로2 4-->
+                                <TableRow
+                                    android:layout_weight="1">
+                                    <Button
+                                        android:id="@+id/seat95"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="95" />
+
+                                    <Button
+                                        android:id="@+id/seat97"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="97" />
+                                </TableRow>
+                                <TableRow
+                                    android:layout_weight="1">
+                                    <Button
+                                        android:id="@+id/seat96"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="96" />
+                                    <Button
+                                        android:id="@+id/seat98"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="98" />
+                                </TableRow>
+                            </TableLayout><!--세로3 가로2-->
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+        <!--끝-->
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

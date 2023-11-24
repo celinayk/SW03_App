@@ -10,6 +10,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
 
     <application
         android:allowBackup="true"
@@ -31,13 +34,6 @@
             </intent-filter>
         </activity>
 
-
-        <!-- ViewPostListActivity를 선언하세요. -->
-        <activity
-            android:name=".ViewPostListActivity"
-            android:label="View Post List Activity"
-            android:exported="true">
-        </activity>
 
         <activity
             android:name=".WriteActivity"

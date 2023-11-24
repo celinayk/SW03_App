@@ -28,7 +28,7 @@
                 </de.hdodenhof.circleimageview.CircleImageView>
 
                 <TextView
-                    android:id="@+id/titleTextView"
+                    android:id="@+id/commentWriterView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center|left"
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="130dp">
                 <TextView
-                    android:id="@+id/Text_View"
+                    android:id="@+id/commentView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="댓글내용"

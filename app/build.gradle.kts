@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "com.example.sw03_app"
         minSdk = 27
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -41,8 +41,6 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.kakao.sdk:v2-all:2.17.0")
-    implementation("com.kakao.sdk:v2-user:2.17.0")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
     testImplementation("junit:junit:4.13.2")
