@@ -65,12 +65,12 @@ public class MyInformationFragment extends Fragment {
                 if (oAuthToken != null) {
                     System.out.println("oAuthToken : " + oAuthToken.getAccessToken());
                     oauthToken = oAuthToken.getAccessToken();
+                    kakaoLogin();
+                    updateKakaoLoginStatus(UserApiClient.getInstance().isKakaoTalkLoginAvailable(requireContext()));
                 }
                 if (throwable != null) {
                     // TBO
                 }
-                // 카카오 로그인 상태에 따라 UI 업데이트
-                updateKakaoLoginStatus(UserApiClient.getInstance().isKakaoTalkLoginAvailable(requireContext()));
                 return null;
             }
         };
@@ -100,9 +100,6 @@ public class MyInformationFragment extends Fragment {
                 });
             }
         });
-
-        kakaoLogin();
-
         return view;
     }
 
@@ -118,6 +115,7 @@ public class MyInformationFragment extends Fragment {
         }
     }
 
+
     private void kakaoLogin() {
         UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
             @Override
@@ -128,7 +126,7 @@ public class MyInformationFragment extends Fragment {
                      */
                     String kakaoUserName = user.getKakaoAccount().getProfile().getNickname();
                     String kakaoUserProfile= user.getKakaoAccount().getProfile().getProfileImageUrl();
-                    //서버로 데이터 보내기
+                    // 로그인이 성공했을 때만 서버로 데이터 보내기
                     sendKakaoUserInfoToServer(kakaoUserName, kakaoUserProfile);
 
                     Log.i(TAG, "invoke : id = " + user.getId());
@@ -144,6 +142,7 @@ public class MyInformationFragment extends Fragment {
             }
         });
     }
+
 
     private void sendKakaoUserInfoToServer(String kakaoUserName, String kakaoUserProfile) {
         Gson gson = new GsonBuilder().setLenient().create();
