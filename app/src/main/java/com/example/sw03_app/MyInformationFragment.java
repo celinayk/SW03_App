@@ -34,6 +34,8 @@ public class MyInformationFragment extends Fragment {
     private static final String BASE_URL = "http://10.0.2.2:8080/";
     private RetrofitService retrofitService;
     private String oauthToken;
+
+    private Long userId;
     /* 서버 통신*/
 
     private View loginButton, logoutButton;
@@ -127,10 +129,13 @@ public class MyInformationFragment extends Fragment {
                     String kakaoUserName = user.getKakaoAccount().getProfile().getNickname();
                     String kakaoUserProfile= user.getKakaoAccount().getProfile().getProfileImageUrl();
                     // 로그인이 성공했을 때만 서버로 데이터 보내기
+                    userId = user.getId();
                     sendKakaoUserInfoToServer(kakaoUserName, kakaoUserProfile);
 
                     Log.i(TAG, "invoke : id = " + user.getId());
                     Log.i(TAG, "invoke : id = " + user.getKakaoAccount().getProfile());
+
+
 
                     loginButton.setVisibility(View.GONE);
                     logoutButton.setVisibility(View.VISIBLE);
@@ -153,7 +158,8 @@ public class MyInformationFragment extends Fragment {
 
         KakaoUserInfo kakaoUserInfo = new KakaoUserInfo(kakaoUserName, kakaoUserProfile);
         String authorizationHeader = oauthToken;
-        Call<String> call = retrofitService.saveKakaoUserInfo(authorizationHeader, kakaoUserInfo);
+        System.out.println("제발나와라 : " + userId);
+        Call<String> call = retrofitService.saveKakaoUserInfo(userId ,authorizationHeader, kakaoUserInfo);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

@@ -8,6 +8,12 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.kakao.sdk.auth.AuthApiClient;
+import com.kakao.sdk.user.UserApiClient;
+import com.kakao.sdk.user.model.AccessTokenInfo;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
 
 public class NoReservation extends AppCompatActivity {
 
@@ -27,7 +33,14 @@ public class NoReservation extends AppCompatActivity {
         reservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*회원에게 좌석 예약 데이터 추가하기*/
+                if (AuthApiClient.getInstance().hasToken()){
+                    UserApiClient.getInstance().accessTokenInfo(new Function2<AccessTokenInfo, Throwable, Unit>() {
+                        @Override
+                        public Unit invoke(AccessTokenInfo accessTokenInfo, Throwable throwable) {
+                            return null;
+                        }
+                    });
+                }
             }
         });
 
