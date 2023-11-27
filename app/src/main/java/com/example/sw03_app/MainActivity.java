@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -16,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     Fragment homeFragment, spotFragment, settingFragment;
     BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         initLayout();
 
         getHashKey();
-
     }
 
     private void getHashKey() {
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 int itemId = item.getItemId();
                 if (itemId == R.id.home) {
                     switchFragment(homeFragment);
+
                     return true;
                 } else if (itemId == R.id.board) {
                     switchFragment(spotFragment);

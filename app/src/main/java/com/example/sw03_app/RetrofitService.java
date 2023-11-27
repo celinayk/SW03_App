@@ -9,7 +9,5 @@ public interface RetrofitService {
     @POST("/api/kakao/save")
     Call<String> saveKakaoUserInfo(@Header("Authorization") String authorizationHeader, @Body KakaoUserInfo kakaoUserInfo);
 
-    @POST("/api/seat/save")
-    Call<String> saveSeatUserInfo(@Body SeatUserInfo seatUserInfo);
 }
 
