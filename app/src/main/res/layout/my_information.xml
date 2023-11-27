@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/kakao_login_medium_narrow"
         android:text="카카오 로그인"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/logout"
