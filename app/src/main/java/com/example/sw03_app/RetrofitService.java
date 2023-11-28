@@ -7,7 +7,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface RetrofitService {
-    @POST("/api/user/{snsId}/save")
+    @POST("/api/user/{snsId}")
     Call<String> saveKakaoUserInfo(@Path("snsId") Long snsId,
                                    @Header("Authorization") String authorizationHeader,
                                    @Body KakaoUserInfo kakaoUserInfo);
