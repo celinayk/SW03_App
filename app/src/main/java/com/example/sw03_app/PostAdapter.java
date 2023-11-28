@@ -11,15 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.sw03_app.dto.Board;
+
 import java.util.ArrayList;
 
 // RecyclerView에 데이터를 제공하고 표시하기 위한 뷰를 생성하는 파일
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder> {
 
-    private ArrayList<PostInfo> localDataSet;
+    private ArrayList<Board> localDataSet;
 
     // 생성자 통해 데이터를 전달받고 이걸 localDataSet에 저장한다
-    public PostAdapter (ArrayList<PostInfo> dataSet) {
+    public PostAdapter (ArrayList<Board> dataSet) {
         this.localDataSet = dataSet;
     }
 
@@ -43,14 +45,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder
     // 뷰 홀더가 재활용될 때 사용되는 메소드
     @Override
     public void onBindViewHolder(@NonNull postViewHolder holder, int position) {
-        PostInfo post = localDataSet.get(position);
+        Board post = localDataSet.get(position);
 
         // 이미지 설정 (이미지가 있다면 해당 이미지로 설정)
         // holder.imageView.setImageResource(post.getImageResource());
 
         holder.title.setText(post.getTitle());
-        holder.postTime.setText(post.getDate().toString());  // 날짜를 문자열로 변환하여 설정
-        holder.postWriter.setText(post.getBoardId().toString());  // 작성자 ID로 설정 (나중에 사용자 이름으로 변경하면 좋을 것 같습니다.)
+        holder.postTime.setText(post.getWriteTime());  // 날짜를 문자열로 변환하여 설정
+        holder.postWriter.setText(post.getBoardId());  // 작성자 ID로 설정 (나중에 사용자 이름으로 변경하면 좋을 것 같습니다.)
         holder.textContentView.setText(post.getContent());
     }
 
