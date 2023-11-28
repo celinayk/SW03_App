@@ -1,0 +1,13 @@
+<resources>
+    <string-array name="category_texts">
+        <item>자유게시판</item>
+        <item>분실물</item>
+        <item>건의사항</item>
+    </string-array>
+
+    <integer-array name="category_numbers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </integer-array>
+</resources>

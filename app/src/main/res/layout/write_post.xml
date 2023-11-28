@@ -7,7 +7,7 @@
     android:backgroundTint="#57717171"
     android:orientation="vertical"
     app:statusBarBackground="#FFFFFF"
-    tools:context=".WriteActivity">
+    tools:context=".WritePost">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/redoButton"
+                android:id="@+id/outButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
@@ -80,7 +80,8 @@
                         android:layout_width="62dp"
                         android:layout_height="62dp"
                         android:layout_margin="10dp"
-                        app:srcCompat="@drawable/ic_baseline_photo_camera_24" >
+                        app:srcCompat="@drawable/ic_baseline_photo_camera_24"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck">
 
                     </ImageButton>
 
@@ -113,18 +114,16 @@
                         android:singleLine="false"
                         android:textColorHint="#c4c4c4" />
 
-                    <TextView
-                        android:id="@+id/categoryView"
+
+                    <Spinner
+                        android:id="@+id/category"
+                        android:layout_marginTop="100dp"
+                        android:layout_centerHorizontal="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
-                        android:gravity="center_vertical"
-                        android:hint="카테고리(길게 클릭하세요)"
-                        android:importantForAutofill="no"
-                        android:inputType="number"
-                        android:minHeight="48dp"
-                        android:paddingBottom="15dp"
-                        android:textColorHint="#c4c4c4" />
+                        android:hint="카테고리"/>
+
 
 
                     <EditText
@@ -135,7 +134,7 @@
                         android:background="#00ff0000"
                         android:gravity="top"
                         android:hint="올릴 게시글 내용을 작성해주세요.\n\n\n"
-                        android:textSize="15.5dp"
+                        android:textSize="17dp"
                         android:importantForAutofill="no"
                         android:inputType="textMultiLine"
                         android:privateImeOptions="defaultInputmode=english"

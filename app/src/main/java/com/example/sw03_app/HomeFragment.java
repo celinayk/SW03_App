@@ -14,6 +14,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.home, container, false);
 
         // 버튼 클릭 시 ViewSeat 액티비티로 이동

@@ -17,8 +17,10 @@ import com.kakao.sdk.common.util.Utility;
 
 public class MainActivity extends AppCompatActivity {
 
-    Fragment homeFragment, spotFragment, settingFragment;
+    Fragment homeFragment, boardFragment, settingFragment;
     BottomNavigationView bottomNavigationView;
+
+    private int selectedItemId = R.id.home; /// 초기값은 home으로 설정
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,31 @@ public class MainActivity extends AppCompatActivity {
         initLayout();
 
         getHashKey();
+
+        // 선택된 아이템을 가져와서 설정
+        int selectedItemId = getIntent().getIntExtra("selectedItemId", R.id.home);
+        // BottomNavigationView에서 기본으로 선택할 아이템을 설정
+        bottomNavigationView.setSelectedItemId(selectedItemId);
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+
+                if (itemId == R.id.home) {
+                    switchFragment(homeFragment);
+                    return true;
+                } else if (itemId == R.id.board) {
+                    switchFragment(boardFragment);
+                    return true;
+                } else if (itemId == R.id.setting) {
+                    switchFragment(settingFragment);
+                    return true;
+                }
+                return false;
+            }
+        });///
     }
 
     private void getHashKey() {
@@ -38,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private void initLayout() {
         /* 하단 바 레이아웃 관련 코드들 */
         homeFragment = new HomeFragment();
-        spotFragment = new BoardFragment();
+        boardFragment = new BoardFragment();
         settingFragment = new SettingFragment();
         switchFragment(homeFragment);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -50,10 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 int itemId = item.getItemId();
                 if (itemId == R.id.home) {
                     switchFragment(homeFragment);
-
                     return true;
                 } else if (itemId == R.id.board) {
-                    switchFragment(spotFragment);
+                    switchFragment(boardFragment);
                     return true;
                 } else if (itemId == R.id.setting) {
                     switchFragment(settingFragment);
