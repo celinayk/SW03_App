@@ -4,9 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.kakao.sdk.auth.AuthApiClient;
+import com.kakao.sdk.common.model.KakaoSdkError;
+import com.kakao.sdk.user.UserApiClient;
+import com.kakao.sdk.user.model.AccessTokenInfo;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
 
 public class ViewSeat extends AppCompatActivity {
 
@@ -33,6 +42,26 @@ public class ViewSeat extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(getApplicationContext(), NoReservation.class);
                     startActivity(intent);
+
+                    if (AuthApiClient.getInstance().hasToken()){
+                        UserApiClient.getInstance().accessTokenInfo(new Function2<AccessTokenInfo, Throwable, Unit>() {
+                            @Override
+                            public Unit invoke(AccessTokenInfo accessTokenInfo, Throwable throwable) {
+                                if (throwable != null) {
+                                    if (throwable instanceof KakaoSdkError && ((KakaoSdkError) throwable).isInvalidTokenError()) {
+                                        // 로그인 필요
+                                        showLoginAlert();
+                                    } else {
+                                        // 기타 에러
+                                        showLoginAlert();
+                                    }
+                                } else {
+                                    // 토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
+                                }
+                                return null;
+                            }
+                        });
+                    }
                     /* 서버 - 좌석을 누르면 회원의 아이디로 회원의 예약좌석 정보를 조회해야한다.
                     조회하고 좌석예약정보가 이미 존재하면, yesReservation실행
                                        존재하지 않으면, noReservation실행
@@ -52,6 +81,11 @@ public class ViewSeat extends AppCompatActivity {
         });
 
 
+    }
+
+    private void showLoginAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ViewSeat.this);
+        builder.setMessage("로그인이 필요");
     }
 
 
