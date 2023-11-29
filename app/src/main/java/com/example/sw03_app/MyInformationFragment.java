@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.sw03_app.client.Client;
+import com.example.sw03_app.retrofit.RetroService;
+import com.example.sw03_app.retrofit.RetrofitClient;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
@@ -17,6 +20,10 @@ import com.kakao.sdk.user.model.User;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class MyInformationFragment extends Fragment {
@@ -106,6 +113,31 @@ public class MyInformationFragment extends Fragment {
             @Override
             public Unit invoke(User user, Throwable throwable) {
                 if (user != null) {
+
+                    Client.setSns_id(user.getId()); // sns_id 저장
+
+                    /* 서버에 유저 등록 요청 */
+                    Retrofit retrofit = RetrofitClient.getClient();
+                    RetroService inquiryRetrofit = retrofit.create(RetroService.class);
+                    Call<String> inquiry = inquiryRetrofit.addUser(user.getId(), user.getKakaoAccount().getProfile().getNickname());
+                    System.out.println("zz = " + user.getKakaoAccount().getProfile().getNickname());
+                    inquiry.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if(response.isSuccessful()) {
+                                String body = response.body();
+                                System.out.println("UserPost Success");
+                            } else {
+                                System.out.println("UserPost fail");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            System.out.println("t = " + t.getMessage());
+                        }
+                    });
+
 
                     Log.i(TAG, "invoke : id = " + user.getId());
                     Log.i(TAG, "invoke : id = " + user.getKakaoAccount().getProfile());

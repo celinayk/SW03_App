@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -14,9 +15,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sw03_app.client.Client;
+import com.example.sw03_app.dto.Board;
+import com.example.sw03_app.dto.BoardPost;
+import com.example.sw03_app.retrofit.RetroService;
+import com.example.sw03_app.retrofit.RetrofitClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class WritePost extends AppCompatActivity {
     private Uri uri;
@@ -84,6 +96,38 @@ public class WritePost extends AppCompatActivity {
         done_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                EditText titleEditText = findViewById(R.id.titleEditText);
+                EditText contentEditText = findViewById(R.id.contentsEditText);
+                String title = titleEditText.getText().toString();
+                String content = contentEditText.getText().toString();
+
+                BoardPost boardPost = new BoardPost();
+                boardPost.setTitle(title);
+                boardPost.setContent(content);
+
+                Retrofit retrofit = RetrofitClient.getClient();
+                RetroService inquiryRetrofit = retrofit.create(RetroService.class);
+                Call<String> inquiry = inquiryRetrofit.addBoard(Client.getSns_id(), boardPost);
+                inquiry.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if(response.isSuccessful()) {
+                            String body = response.body();
+                            System.out.println("body = " + body);
+                            System.out.println("BoardPost Success");
+                        } else {
+                            System.out.println("BoardPost fail");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        System.out.println("t = " + t.getMessage());
+                    }
+                });
+
+
                 //제목,카테고리,내용,작성자,작성일시간 등의 정보가 서버에 전달되고 데이터에 저장되어야함.
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -121,6 +165,8 @@ public class WritePost extends AppCompatActivity {
             imageView.setImageURI(selectedImageUri);
         }
     }
+
+
 
 
 }
