@@ -85,26 +85,27 @@ public class ViewSeat extends AppCompatActivity {
         });
     }
 
-    private void updateSeatButtons() {for (int i = 1; i <= seatBtns.length; i++) {
-        int buttonId = getResources().getIdentifier("seat" + i, "id", getPackageName());
-        seatBtns[i - 1] = findViewById(buttonId);
+    private void updateSeatButtons() {
+        for (int i = 1; i <= seatBtns.length; i++) {
+            int buttonId = getResources().getIdentifier("seat" + i, "id", getPackageName());
+            seatBtns[i - 1] = findViewById(buttonId);
 
-        // 서버에서 받아온 정보를 기반으로 예약 버튼 표시 여부 결정
-        boolean isReservationPossible = seatList.get(i - 1).isAble(); // able이 1이면 예약 가능
+            // 서버에서 받아온 정보를 기반으로 예약 버튼 표시 여부 결정
+            boolean isReservationPossible = seatList.get(i - 1).isAble(); // able이 1이면 예약 가능
 
-        if (isReservationPossible) {
-
-        } else {
-            seatBtns[i - 1].setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.red));
-        }
-
-        seatBtns[i - 1].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 여기에 좌석을 클릭했을 때의 동작 추가
-                // 예약 가능한 좌석인지 여부를 확인하여 처리
+            if (isReservationPossible) {
+                seatBtns[i - 1].setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.green)); // 예약 가능한 좌석의 배경색 초기화
+                seatBtns[i - 1].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), NoReservation.class);
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                seatBtns[i - 1].setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.red));
+                seatBtns[i - 1].setOnClickListener(null); // 예약 불가능한 좌석은 클릭 이벤트 제거
             }
-        });
-    }
+        }
     }
 }
