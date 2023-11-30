@@ -11,23 +11,33 @@ import java.util.Date;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.sw03_app.dto.Board;
+import com.example.sw03_app.retrofit.RetroService;
+import com.example.sw03_app.retrofit.RetrofitClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class BoardFragment extends Fragment {
 
     private RecyclerView community_recyclerView;
     private PostAdapter postAdapter;
-    private ArrayList<PostInfo> items = new ArrayList<>();
 
     // PostDetailActivity에게 현재 인스턴스를 전달하는 메서드
     public static BoardFragment newInstance() {
         return new BoardFragment();
     }
+
+    ArrayList<Board> items = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,20 +53,32 @@ public class BoardFragment extends Fragment {
         community_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         postAdapter = new PostAdapter(items, this);
+
+        Retrofit retrofit = RetrofitClient.getClient();
+        RetroService inquiryRetrofit = retrofit.create(RetroService.class);
+        Call<ArrayList<Board>> inquiry = inquiryRetrofit.getBoards();
+        inquiry.enqueue(new Callback<ArrayList<Board>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Board>> call, Response<ArrayList<Board>> response) {
+                if(response.isSuccessful()) {
+                    ArrayList<Board> listResponse = response.body();
+                    items = listResponse;
+                } else {
+                    System.out.println("FAIL!@!@!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Board>> call, Throwable t) {
+                System.out.println("t = " + t);
+            }
+        });
+
+        for (Board item : items) {
+            System.out.println("item = " + item.getContent());
+        }
+        // postAdapter = new PostAdapter(items);
         community_recyclerView.setAdapter(postAdapter);
-
-
-        // 임의의 데이터 추가 (테스트 목적)
-        items.add(new PostInfo(1, "안녕1", 1, new Date(System.currentTimeMillis()), "내용1"));
-        items.add(new PostInfo(2, "제목2", 2, new Date(System.currentTimeMillis()), "내용2"));
-        items.add(new PostInfo(3, "제목3", 1, new Date(System.currentTimeMillis()), "내용3"));
-        items.add(new PostInfo(4, "정윤4", 1, new Date(System.currentTimeMillis()), "내용4"));
-        items.add(new PostInfo(5, "제목5", 2, new Date(System.currentTimeMillis()), "내용5"));
-        items.add(new PostInfo(6, "제목6", 1, new Date(System.currentTimeMillis()), "내용6"));
-        items.add(new PostInfo(7, "제목7", 1, new Date(System.currentTimeMillis()), "내용7"));
-        items.add(new PostInfo(8, "제목8", 2, new Date(System.currentTimeMillis()), "내용8"));
-        items.add(new PostInfo(9, "제목9", 1, new Date(System.currentTimeMillis()), "내용9"));
-
         postAdapter.notifyDataSetChanged();
 
 

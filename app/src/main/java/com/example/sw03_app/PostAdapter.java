@@ -11,15 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.sw03_app.dto.Board;
+
 import java.util.ArrayList;
 
 // RecyclerView에 데이터를 제공하고 표시하기 위한 뷰를 생성하는 파일
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder> {
-    private ArrayList<PostInfo> localDataSet;
+    private ArrayList<Board> localDataSet;
     private AdapterView.OnItemClickListener itemClickListener;
 
     // 생성자 통해 데이터를 전달받고 이걸 localDataSet에 저장한다
-    public PostAdapter(ArrayList<PostInfo> dataSet, BoardFragment boardFragment) {
+    public PostAdapter (ArrayList<Board> dataSet, BoardFragment boardFragment) {
         this.localDataSet = dataSet;
     }
 
@@ -43,23 +45,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder
     // 뷰 홀더가 재활용될 때 사용되는 메소드
     @Override
     public void onBindViewHolder(@NonNull postViewHolder holder, int position) {
-        PostInfo post = localDataSet.get(position);
+        Board post = localDataSet.get(position);
 
         // 이미지 설정 (이미지가 있다면 해당 이미지로 설정)
         // holder.imageView.setImageResource(post.getImageResource());
 
         holder.title.setText(post.getTitle());
-        holder.postTime.setText(post.getDate().toString());  // 날짜를 문자열로 변환하여 설정
-        holder.postWriter.setText(post.getBoardId().toString());  // 작성자 ID로 설정 (나중에 사용자 이름으로 변경하면 좋을 것 같습니다.)
+        holder.postTime.setText(post.getWriteTime());  // 날짜를 문자열로 변환하여 설정
+        holder.postWriter.setText(post.getBoardId());  // 작성자 ID로 설정 (나중에 사용자 이름으로 변경하면 좋을 것 같습니다.)
         holder.textContentView.setText(post.getContent());
-/*
-        holder.itemClickListener = (v, position1) -> {
-            Integer boardId = post.getBoardId();
-            Intent intent = new Intent(v.getContext(), PostDetailActivity.class);
-            intent.putExtra("boardId", boardId);
-            v.getContext().startActivity(intent);
-        };
-*/
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,12 +70,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder
 
     // BoardFragment에서 PostDetailActivity로 이동할 때 데이터 전달
     public void OnItemClickListener(View v, int position) {
-        Integer boardId = localDataSet.get(position).getBoardId();
+        String boardId = localDataSet.get(position).getBoardId();
 
         // Intent를 생성하고 데이터를 put
         Intent intent = new Intent(v.getContext(), PostDetailActivity.class);
         intent.putExtra("boardId", boardId);
-       // intent.putParcelableArrayListExtra("items", new ArrayList<PostInfo>(items));  // 전체 데이터를 전달
 
         // PostDetailActivity 시작
         v.getContext().startActivity(intent);
