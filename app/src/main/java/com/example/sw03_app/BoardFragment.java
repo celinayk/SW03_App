@@ -22,9 +22,12 @@ public class BoardFragment extends Fragment {
 
     private RecyclerView community_recyclerView;
     private PostAdapter postAdapter;
+    private ArrayList<PostInfo> items = new ArrayList<>();
 
-
-    ArrayList<PostInfo> items = new ArrayList<>();
+    // PostDetailActivity에게 현재 인스턴스를 전달하는 메서드
+    public static BoardFragment newInstance() {
+        return new BoardFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,15 +42,15 @@ public class BoardFragment extends Fragment {
         community_recyclerView = view.findViewById(R.id.community_recyclerView);
         community_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        postAdapter = new PostAdapter(items);
+        postAdapter = new PostAdapter(items, this);
         community_recyclerView.setAdapter(postAdapter);
 
 
         // 임의의 데이터 추가 (테스트 목적)
-        items.add(new PostInfo(1, "제목1", 1, new Date(System.currentTimeMillis()), "내용1"));
+        items.add(new PostInfo(1, "안녕1", 1, new Date(System.currentTimeMillis()), "내용1"));
         items.add(new PostInfo(2, "제목2", 2, new Date(System.currentTimeMillis()), "내용2"));
         items.add(new PostInfo(3, "제목3", 1, new Date(System.currentTimeMillis()), "내용3"));
-        items.add(new PostInfo(4, "제목4", 1, new Date(System.currentTimeMillis()), "내용4"));
+        items.add(new PostInfo(4, "정윤4", 1, new Date(System.currentTimeMillis()), "내용4"));
         items.add(new PostInfo(5, "제목5", 2, new Date(System.currentTimeMillis()), "내용5"));
         items.add(new PostInfo(6, "제목6", 1, new Date(System.currentTimeMillis()), "내용6"));
         items.add(new PostInfo(7, "제목7", 1, new Date(System.currentTimeMillis()), "내용7"));

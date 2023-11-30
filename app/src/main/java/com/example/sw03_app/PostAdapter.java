@@ -1,10 +1,10 @@
 package com.example.sw03_app;
 
-import android.icu.text.SimpleDateFormat;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,11 +15,11 @@ import java.util.ArrayList;
 
 // RecyclerView에 데이터를 제공하고 표시하기 위한 뷰를 생성하는 파일
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder> {
-
     private ArrayList<PostInfo> localDataSet;
+    private AdapterView.OnItemClickListener itemClickListener;
 
     // 생성자 통해 데이터를 전달받고 이걸 localDataSet에 저장한다
-    public PostAdapter (ArrayList<PostInfo> dataSet) {
+    public PostAdapter(ArrayList<PostInfo> dataSet, BoardFragment boardFragment) {
         this.localDataSet = dataSet;
     }
 
@@ -52,8 +52,39 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder
         holder.postTime.setText(post.getDate().toString());  // 날짜를 문자열로 변환하여 설정
         holder.postWriter.setText(post.getBoardId().toString());  // 작성자 ID로 설정 (나중에 사용자 이름으로 변경하면 좋을 것 같습니다.)
         holder.textContentView.setText(post.getContent());
+/*
+        holder.itemClickListener = (v, position1) -> {
+            Integer boardId = post.getBoardId();
+            Intent intent = new Intent(v.getContext(), PostDetailActivity.class);
+            intent.putExtra("boardId", boardId);
+            v.getContext().startActivity(intent);
+        };
+*/
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),PostDetailActivity.class);
+                intent.putExtra("boardId", post.getBoardId());
+                intent.putParcelableArrayListExtra("items", new ArrayList<>(localDataSet));  // 전체 데이터를 전달
+
+                v.getContext().startActivity(intent);
+            }
+        });
+
     }
 
+    // BoardFragment에서 PostDetailActivity로 이동할 때 데이터 전달
+    public void OnItemClickListener(View v, int position) {
+        Integer boardId = localDataSet.get(position).getBoardId();
+
+        // Intent를 생성하고 데이터를 put
+        Intent intent = new Intent(v.getContext(), PostDetailActivity.class);
+        intent.putExtra("boardId", boardId);
+       // intent.putParcelableArrayListExtra("items", new ArrayList<PostInfo>(items));  // 전체 데이터를 전달
+
+        // PostDetailActivity 시작
+        v.getContext().startActivity(intent);
+    }
 
 
     // 전체 데이터의 갯수 리턴
@@ -63,23 +94,48 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder
     }
 
 
-    // 뷰홀더 클래스, 뷰홀더에 필요한 데이터들
-    public static class postViewHolder extends RecyclerView.ViewHolder {
+    // 특정 게시글에 대한 댓글 필터링 메서드
+  /*private ArrayList<CommentInfo> filterCommentsByPost(int boardId) {
+        ArrayList<CommentInfo> filteredComments = new ArrayList<>();
 
-        //private ImageView imageView;
-        private TextView title;
-        private TextView postTime;
-        private TextView postWriter;
-        private TextView textContentView;
+        filteredComments.add(new CommentInfo(1, "댓글1", new Date(System.currentTimeMillis()), 1));
+        filteredComments.add(new CommentInfo(2, "댓글2", new Date(System.currentTimeMillis()), 1));
+        filteredComments.add(new CommentInfo(3, "댓글3", new Date(System.currentTimeMillis()), 2));
 
-        public postViewHolder(@NonNull View itemView) {
-            super(itemView);
-            //this.imageView = itemView.findViewById(R.id.imageView);
-            this.title = itemView.findViewById(R.id.titleTextView);
-            this.postTime = itemView.findViewById(R.id.post_time);
-            this.postWriter = itemView.findViewById(R.id.post_writer);
-            this.textContentView = itemView.findViewById(R.id.textcontentView);
+        return filteredComments;
+    }
+*/
+
+        // 뷰홀더 클래스, 뷰홀더에 필요한 데이터들
+        public static class postViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+            OnItemClickListener itemClickListener;
+            //private ImageView imageView;
+            private TextView title;
+            private TextView postTime;
+            private TextView postWriter;
+            private TextView textContentView;
+           // private RecyclerView commentrecyclerView; //게시글밑에 있는 댓글리사이클러뷰
+
+            public postViewHolder(@NonNull View itemView) {
+                super(itemView);
+                //this.imageView = itemView.findViewById(R.id.imageView);
+                this.title = itemView.findViewById(R.id.titleTextView);
+                this.postTime = itemView.findViewById(R.id.post_time);
+                this.postWriter = itemView.findViewById(R.id.post_writer);
+                this.textContentView = itemView.findViewById(R.id.textcontentView);
+                //this.commentrecyclerView = itemView.findViewById(R.id.comment_recyclerView);
+
+                // itemView에 클릭 리스너 설정
+                itemView.setOnClickListener(this);
+            }
+
+            @Override
+            public void onClick(View v) {
+                this.itemClickListener.onItemClickListener(v,getLayoutPosition());
+            }
         }
     }
 
-}
+
+
