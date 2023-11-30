@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Board implements Parcelable {
     @SerializedName("boardId")
-    private String boardId;
+    private Integer boardId;
 
     @SerializedName("title")
     private String title;
@@ -21,7 +21,7 @@ public class Board implements Parcelable {
     private String writeTime;
 
     protected Board(Parcel in) {
-        boardId = in.readString();
+        boardId = in.readInt();
         title = in.readString();
         content = in.readString();
         writeTime = in.readString();
@@ -39,11 +39,11 @@ public class Board implements Parcelable {
         }
     };
 
-    public String getBoardId() {
+    public Integer getBoardId() {
         return boardId;
     }
 
-    public void setBoardId(String boardId) {
+    public void setBoardId(Integer boardId) {
         this.boardId = boardId;
     }
 
@@ -78,7 +78,7 @@ public class Board implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeString(boardId);
+        dest.writeInt(boardId);
         dest.writeString(title);
         dest.writeString(content);
         dest.writeString(writeTime);

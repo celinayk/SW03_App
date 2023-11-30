@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sw03_app.dto.Board;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.Date;
 public class PostDetailActivity extends AppCompatActivity {
 
     // BoardFragment에서 전달받은 데이터 리스트
-    private ArrayList<PostInfo> items = new ArrayList<>();
+    private ArrayList<Board> items = new ArrayList<>();
 
     private TextView titleTextView;
     private TextView contentTextView;
@@ -65,9 +66,10 @@ public class PostDetailActivity extends AppCompatActivity {
 
             if (boardId!= -1 && items != null) {
                 // 게시글 id를 사용하여 게시글 정보를 조회
-                PostInfo post = getPostsByBoardId(boardId, items);
+                Board post = getPostsByBoardId(boardId, items);
 
                 if(post != null) {
+                    System.out.println("post = " + post.getContent());
                     titleTextView.setText(post.getTitle());
                     contentTextView.setText(post.getContent());
                     writerTextView.setText("작성자: " + post.getBoardId().toString());
@@ -96,10 +98,12 @@ public class PostDetailActivity extends AppCompatActivity {
                 }
             }
 
-            
-    private PostInfo getPostsByBoardId(int boardId,ArrayList<PostInfo> items ) {
-        for (PostInfo post : items) {
-            if (post.getBoardId() == boardId) {
+
+    private Board getPostsByBoardId(Integer boardId,ArrayList<Board> items ) {
+        for (Board post : items) {
+            System.out.println("외부 : boardId = " + boardId + "getBoardId = " + post.getBoardId());
+            if (post.getBoardId().toString().equals(boardId.toString())) {
+                System.out.println("내부 : boardId = " + boardId + "getBoardId = " + post.getBoardId());
                 return post;
             }
         }

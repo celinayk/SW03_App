@@ -52,7 +52,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder
 
         holder.title.setText(post.getTitle());
         holder.postTime.setText(post.getWriteTime());  // 날짜를 문자열로 변환하여 설정
-        holder.postWriter.setText(post.getBoardId());  // 작성자 ID로 설정 (나중에 사용자 이름으로 변경하면 좋을 것 같습니다.)
+        holder.postWriter.setText(post.getBoardId().toString());  // 작성자 ID로 설정 (나중에 사용자 이름으로 변경하면 좋을 것 같습니다.)
         holder.textContentView.setText(post.getContent());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +70,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder
 
     // BoardFragment에서 PostDetailActivity로 이동할 때 데이터 전달
     public void OnItemClickListener(View v, int position) {
-        String boardId = localDataSet.get(position).getBoardId();
+        Integer boardId = localDataSet.get(position).getBoardId();
 
         // Intent를 생성하고 데이터를 put
         Intent intent = new Intent(v.getContext(), PostDetailActivity.class);
