@@ -96,9 +96,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 }
             }
 
-
-
-
+            
     private PostInfo getPostsByBoardId(int boardId,ArrayList<PostInfo> items ) {
         for (PostInfo post : items) {
             if (post.getBoardId() == boardId) {
