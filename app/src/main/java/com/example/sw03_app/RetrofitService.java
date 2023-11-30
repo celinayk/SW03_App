@@ -16,5 +16,8 @@ public interface RetrofitService {
                                    @Body KakaoUserInfo kakaoUserInfo);
     @GET("/api/seat")
     Call<List<SeatUserInfo>> getSeats();
+
+    @POST("/api/seat/{seatId}/{snsId}")
+    Call<Void> reserveSeat(@Path("seatId") Long seatId, @Path("snsId") Long snsId);
 }
 

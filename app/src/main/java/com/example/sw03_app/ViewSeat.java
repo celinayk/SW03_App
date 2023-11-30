@@ -2,6 +2,7 @@ package com.example.sw03_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -30,6 +31,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ViewSeat extends AppCompatActivity {
+
+    private long finalSeatId;
 
     private List<SeatUserInfo> seatList; // Seat 클래스 import
     private Button[] seatBtns;
@@ -93,12 +96,16 @@ public class ViewSeat extends AppCompatActivity {
             // 서버에서 받아온 정보를 기반으로 예약 버튼 표시 여부 결정
             boolean isReservationPossible = seatList.get(i - 1).isAble(); // able이 1이면 예약 가능
 
+            final int seatNum = i; // 클릭한 버튼의 숫자를 저장
+
             if (isReservationPossible) {
                 seatBtns[i - 1].setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.green)); // 예약 가능한 좌석의 배경색 초기화
                 seatBtns[i - 1].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(), NoReservation.class);
+                        intent.putExtra("seatId", seatNum); // 클릭한 버튼의 숫자를 Intent에 추가
+                        Log.d("ViewSeat", "Received seatId: " + seatNum);
                         startActivity(intent);
                     }
                 });
@@ -108,4 +115,5 @@ public class ViewSeat extends AppCompatActivity {
             }
         }
     }
+
 }
