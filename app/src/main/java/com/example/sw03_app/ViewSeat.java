@@ -96,7 +96,7 @@ public class ViewSeat extends AppCompatActivity {
             // 서버에서 받아온 정보를 기반으로 예약 버튼 표시 여부 결정
             boolean isReservationPossible = seatList.get(i - 1).isAble(); // able이 1이면 예약 가능
 
-            final int seatNum = i; // 클릭한 버튼의 숫자를 저장
+            final long seatNum = i; // 클릭한 버튼의 숫자를 저장
 
             if (isReservationPossible) {
                 seatBtns[i - 1].setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.green)); // 예약 가능한 좌석의 배경색 초기화

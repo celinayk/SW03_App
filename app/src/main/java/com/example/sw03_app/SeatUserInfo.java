@@ -11,43 +11,17 @@ public class SeatUserInfo {
     private Long seatId;
     private boolean able;
 
-    private LocalDateTime startTime;
+    private String startTime;
 
     private List<User> userList;
-
-    public Long getSeatId() {
-        return seatId;
-    }
-
-    public void setSeatId(Long seatId) {
-        this.seatId = seatId;
-    }
 
     public boolean isAble() {
         return able;
     }
 
-    public void setAble(boolean able) {
-        this.able = able;
-    }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
-
-    public SeatUserInfo(Long seatId, boolean able, LocalDateTime startTime, List<User> userList) {
+    public SeatUserInfo(Long seatId, boolean able, String startTime, List<User> userList) {
         this.seatId = seatId;
         this.able = able;
         this.startTime = startTime;
