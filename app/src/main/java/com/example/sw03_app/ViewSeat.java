@@ -88,6 +88,10 @@ public class ViewSeat extends AppCompatActivity {
         });
     }
 
+    private void exitCurrentPage() {
+        finish();
+    }
+
     private void updateSeatButtons() {
         for (int i = 1; i <= seatBtns.length; i++) {
             int buttonId = getResources().getIdentifier("seat" + i, "id", getPackageName());
@@ -107,6 +111,8 @@ public class ViewSeat extends AppCompatActivity {
                         intent.putExtra("seatId", seatNum); // 클릭한 버튼의 숫자를 Intent에 추가
                         Log.d("ViewSeat", "Received seatId: " + seatNum);
                         startActivity(intent);
+
+                        exitCurrentPage();
                     }
                 });
             } else {

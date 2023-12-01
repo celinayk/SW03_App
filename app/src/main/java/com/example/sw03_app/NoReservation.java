@@ -60,6 +60,7 @@ public class NoReservation extends AppCompatActivity {
 
                         // 서버에 예약 요청 보내는 부분
                         sendReservationRequest();
+                        exitCurrentPage();
 
                         return null;
                     }
@@ -84,6 +85,10 @@ public class NoReservation extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void exitCurrentPage() {
+        finish();
     }
 
     private void sendReservationRequest() {
