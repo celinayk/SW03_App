@@ -32,6 +32,10 @@ public class BoardFragment extends Fragment {
     private RecyclerView community_recyclerView;
     private PostAdapter postAdapter;
 
+    // PostDetailActivity에게 현재 인스턴스를 전달하는 메서드
+    public static BoardFragment newInstance() {
+        return new BoardFragment();
+    }
 
     ArrayList<Board> items = new ArrayList<>();
 
@@ -48,6 +52,7 @@ public class BoardFragment extends Fragment {
         community_recyclerView = view.findViewById(R.id.community_recyclerView);
         community_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        postAdapter = new PostAdapter(items, this);
 
         Retrofit retrofit = RetrofitClient.getClient();
         RetroService inquiryRetrofit = retrofit.create(RetroService.class);
@@ -72,11 +77,8 @@ public class BoardFragment extends Fragment {
         for (Board item : items) {
             System.out.println("item = " + item.getContent());
         }
-        postAdapter = new PostAdapter(items);
+        // postAdapter = new PostAdapter(items);
         community_recyclerView.setAdapter(postAdapter);
-
-
-        // 임의의 데이터 추가 (테스트 목적)
         postAdapter.notifyDataSetChanged();
 
 

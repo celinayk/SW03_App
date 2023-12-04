@@ -1,5 +1,7 @@
 package com.example.sw03_app;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 
@@ -12,7 +14,10 @@ public class CommentInfo {
 
     private String content;
 
-    private Date date;
+    private java.util.Date date;
+
+    @SerializedName("id")
+    private Integer boardId; // FK 게시글 아이디 추가
 
     public Integer getCommentId() {
         return commentId;
@@ -30,18 +35,27 @@ public class CommentInfo {
         this.content = content;
     }
 
-    public Date getDate() {
+    public java.util.Date getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(java.util.Date date) {
         this.date = date;
     }
 
-    public CommentInfo(Integer commentId, String content, Date date) {
+    public Integer getBoardId() {
+        return boardId;
+    }
+
+    public void setBoardId(Integer boardId) {
+        this.boardId = boardId;
+    }
+
+    public CommentInfo(Integer commentId, String content, java.util.Date date, Integer boardId) {
         this.commentId = commentId;
         this.content = content;
         this.date = date;
+        this.boardId = boardId;
     }
 
 

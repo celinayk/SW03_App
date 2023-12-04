@@ -1,10 +1,15 @@
 package com.example.sw03_app.dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Board {
+public class Board implements Parcelable {
     @SerializedName("boardId")
-    private String boardId;
+    private Integer boardId;
 
     @SerializedName("title")
     private String title;
@@ -15,11 +20,30 @@ public class Board {
     @SerializedName("writeTime")
     private String writeTime;
 
-    public String getBoardId() {
+    protected Board(Parcel in) {
+        boardId = in.readInt();
+        title = in.readString();
+        content = in.readString();
+        writeTime = in.readString();
+    }
+
+    public static final Creator<Board> CREATOR = new Creator<Board>() {
+        @Override
+        public Board createFromParcel(Parcel in) {
+            return new Board(in);
+        }
+
+        @Override
+        public Board[] newArray(int size) {
+            return new Board[size];
+        }
+    };
+
+    public Integer getBoardId() {
         return boardId;
     }
 
-    public void setBoardId(String boardId) {
+    public void setBoardId(Integer boardId) {
         this.boardId = boardId;
     }
 
@@ -45,5 +69,18 @@ public class Board {
 
     public void setWriteTime(String writeTime) {
         this.writeTime = writeTime;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(boardId);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeString(writeTime);
     }
 }
