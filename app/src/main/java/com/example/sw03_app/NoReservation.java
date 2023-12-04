@@ -1,7 +1,9 @@
 package com.example.sw03_app;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -60,6 +62,8 @@ public class NoReservation extends AppCompatActivity {
 
                         // 서버에 예약 요청 보내는 부분
                         sendReservationRequest();
+                        saveReservedSeatToSharedPreferences();
+                        exitCurrentPage();
 
                         return null;
                     }
@@ -84,6 +88,19 @@ public class NoReservation extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void saveReservedSeatToSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("isSeatReserved", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isSeatReserved", true);
+        editor.apply();
+
+        Log.d("NoReserVation", "Saved isSeatReserved: true");
+    }
+
+    private void exitCurrentPage() {
+        finish();
     }
 
     private void sendReservationRequest() {
