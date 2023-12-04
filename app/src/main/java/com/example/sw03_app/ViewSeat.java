@@ -1,6 +1,8 @@
 package com.example.sw03_app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +44,7 @@ public class ViewSeat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.seat_view); //seat_view보여줌. (좌석현황)
+
 
         int seatCount = 98; // 좌석버튼 개수
         seatBtns = new Button[seatCount]; // 버튼을 담을 배열
@@ -87,7 +90,6 @@ public class ViewSeat extends AppCompatActivity {
             }
         });
     }
-
     private void updateSeatButtons() {
         for (int i = 1; i <= seatBtns.length; i++) {
             int buttonId = getResources().getIdentifier("seat" + i, "id", getPackageName());
@@ -103,6 +105,7 @@ public class ViewSeat extends AppCompatActivity {
                 seatBtns[i - 1].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        exitCurrentPage();
                         Intent intent = new Intent(getApplicationContext(), NoReservation.class);
                         intent.putExtra("seatId", seatNum); // 클릭한 버튼의 숫자를 Intent에 추가
                         Log.d("ViewSeat", "Received seatId: " + seatNum);
@@ -114,6 +117,9 @@ public class ViewSeat extends AppCompatActivity {
                 seatBtns[i - 1].setOnClickListener(null); // 예약 불가능한 좌석은 클릭 이벤트 제거
             }
         }
+    }
+    private void exitCurrentPage() {
+        finish();
     }
 
 }

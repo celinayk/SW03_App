@@ -11,8 +11,6 @@ public class SeatUserInfo {
     private Long seatId;
     private boolean able;
 
-    private String startTime;
-
     private List<User> userList;
 
     public boolean isAble() {
@@ -21,10 +19,9 @@ public class SeatUserInfo {
 
 
 
-    public SeatUserInfo(Long seatId, boolean able, String startTime, List<User> userList) {
+    public SeatUserInfo(Long seatId, boolean able, List<User> userList) {
         this.seatId = seatId;
         this.able = able;
-        this.startTime = startTime;
         this.userList = userList;
     }
 }
