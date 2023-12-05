@@ -2,14 +2,35 @@ package com.example.sw03_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.kakao.sdk.user.UserApiClient;
+import com.kakao.sdk.user.model.User;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class YesReservation extends AppCompatActivity {
+
+    private static final String BASE_URL = "http://10.0.2.2:8080/";
+    private RetrofitService retrofitService;
+    private long snsId;
+    private long seatId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +44,14 @@ public class YesReservation extends AppCompatActivity {
         cancelBtn = (Button) findViewById(R.id.cancelBtn);
         out_button = (FloatingActionButton)findViewById(R.id.outButton);
         redo_button = (FloatingActionButton)findViewById(R.id.redoButton);
+
+        UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
+            @Override
+            public Unit invoke(User user, Throwable throwable) {
+                snsId = user.getId();
+                return null;
+            }
+        });
 
 
         /* remainingTime, seatNumber 이라는 이름의 TextView에 mysql에서 불러온 값을 넣어줘야함.
@@ -42,7 +71,43 @@ public class YesReservation extends AppCompatActivity {
         extendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*데이터베이스에서 사용자의 좌석 정보를 가져오고, 한시간 연장하기*/
+
+                Intent intent = getIntent();
+                if (intent != null) {
+                    seatId = intent.getLongExtra("seatId", -1);
+                    // 로그를 추가하여 seatId 값 확인
+                    Log.d("YesReservation-Extend", "Received seatId: " + seatId);
+                    Log.d("YesReservation-Extend", "Received snsId : " + snsId);
+                }
+
+                Gson gson = new GsonBuilder().setLenient().create();
+                Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(new OkHttpClient())
+                        .build();
+                retrofitService = retrofit.create(RetrofitService.class);
+
+                Call<Void> call = retrofitService.extendSeat(seatId);
+
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            // API 호출 성공
+                            Toast.makeText(getApplicationContext(), "좌석이 연장되었습니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // API 호출 실패
+                            Toast.makeText(getApplicationContext(), "좌석 연장에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "네트워크 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                exitCurrentPage();
             }
         });
 
@@ -50,7 +115,42 @@ public class YesReservation extends AppCompatActivity {
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*데이터베이스에서 사용자의 좌석 정보를 가져오고, 자리 취소하기*/
+
+                Intent intent = getIntent();
+                if (intent != null) {
+                    seatId = intent.getLongExtra("seatId", -1);
+                    // 로그를 추가하여 seatId 값 확인
+                    Log.d("YesReservation-Cancel", "Received seatId: " + seatId);
+                    Log.d("YesReservation-cancel", "Received snsId : " + snsId);
+                }
+
+                Gson gson = new GsonBuilder().setLenient().create();
+                Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(new OkHttpClient())
+                        .build();
+                retrofitService = retrofit.create(RetrofitService.class);
+                Call<Void> call = retrofitService.cancelSeat(snsId);
+
+                // 비동기적으로 실행하기 위해 enqueue 메소드 호출
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        // 요청이 성공적으로 처리됐을 때의 동작
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "좌석이 취소되었습니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "좌석이 취소에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "네트워크 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                exitCurrentPage();
             }
         });
 
@@ -72,5 +172,9 @@ public class YesReservation extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void exitCurrentPage() {
+        finish();
     }
 }
