@@ -127,10 +127,11 @@ public class MyInformationFragment extends Fragment {
                      * 서버로 보내기
                      */
                     String kakaoUserName = user.getKakaoAccount().getProfile().getNickname();
-                    String kakaoUserProfile= user.getKakaoAccount().getProfile().getProfileImageUrl();
+                    //String kakaoUserProfile= user.getKakaoAccount().getProfile().getProfileImageUrl();
                     // 로그인이 성공했을 때만 서버로 데이터 보내기
                     userId = user.getId();
-                    sendKakaoUserInfoToServer(kakaoUserName, kakaoUserProfile);
+                    System.out.println(kakaoUserName);
+                    sendKakaoUserInfoToServer(kakaoUserName);
 
                     Log.i(TAG, "invoke : id = " + user.getId());
                     Log.i(TAG, "invoke : id = " + user.getKakaoAccount().getProfile());
@@ -149,17 +150,17 @@ public class MyInformationFragment extends Fragment {
     }
 
 
-    private void sendKakaoUserInfoToServer(String kakaoUserName, String kakaoUserProfile) {
+    private void sendKakaoUserInfoToServer(String kakaoUserName) {
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson)).client(new OkHttpClient()).build();
         retrofitService = retrofit.create(RetrofitService.class);
 
-        KakaoUserInfo kakaoUserInfo = new KakaoUserInfo(kakaoUserName, kakaoUserProfile);
+        KakaoUserInfo kakaoUserInfo = new KakaoUserInfo(kakaoUserName);
         String authorizationHeader = oauthToken;
         System.out.println("제발나와라 : " + userId);
-        Call<String> call = retrofitService.saveKakaoUserInfo(userId ,authorizationHeader, kakaoUserInfo);
+        Call<String> call = retrofitService.saveKakaoUserInfo(userId ,authorizationHeader, kakaoUserName);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
