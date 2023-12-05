@@ -2,7 +2,6 @@ package com.example.sw03_app;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -14,19 +13,20 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.core.app.ActivityCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kakao.sdk.auth.AuthApiClient;
-import com.kakao.sdk.common.model.KakaoSdkError;
+
 import com.kakao.sdk.user.UserApiClient;
-import com.kakao.sdk.user.model.AccessTokenInfo;
+
 import com.kakao.sdk.user.model.User;
 
 import kotlin.Unit;
@@ -275,15 +275,15 @@ public class NoReservation extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    // 성공적으로 예약됨
+                    Toast.makeText(getApplicationContext(), "좌석이 예약되었습니다.", Toast.LENGTH_SHORT).show();
                 } else {
-                    // 서버 응답이 실패일 때의 처리
+                    Toast.makeText(getApplicationContext(), "좌석 예약에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                // 통신 실패 처리
+                Toast.makeText(getApplicationContext(), "네트워크 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

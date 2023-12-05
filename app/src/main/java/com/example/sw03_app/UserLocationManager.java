@@ -37,7 +37,8 @@ public class UserLocationManager {
             requestLocationUpdates();
             return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
-        //todo 이경우 어떡할지(위치 권한을 설정하지 않았거나 푼 경우 서버에 그냥 해제요청보낸다?)
+
+
         //그렇다고 그대로 냅두면 이 앱 왜씀?
         return null;
     }
@@ -52,5 +53,3 @@ public class UserLocationManager {
         locationManager.removeUpdates(locationListener);
     }
 
-
-}

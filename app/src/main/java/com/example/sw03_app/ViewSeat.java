@@ -114,7 +114,16 @@ public class ViewSeat extends AppCompatActivity {
                 });
             } else {
                 seatBtns[i - 1].setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.red));
-                seatBtns[i - 1].setOnClickListener(null); // 예약 불가능한 좌석은 클릭 이벤트 제거
+                seatBtns[i - 1].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        exitCurrentPage();
+                        Intent intent = new Intent(getApplicationContext(), YesReservation.class);
+                        intent.putExtra("seatId", seatNum); // 클릭한 버튼의 숫자를 Intent에 추가
+                        Log.d("ViewSeat", "Received seatId: " + seatNum);
+                        startActivity(intent);
+                    }
+                }); // 예약 불가능한 좌석은 클릭 이벤트 제거
             }
         }
     }
