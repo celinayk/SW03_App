@@ -37,6 +37,8 @@ public class UserLocationManager {
             requestLocationUpdates();
             return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
+
+
         //그렇다고 그대로 냅두면 이 앱 왜씀?
         return null;
     }
@@ -51,5 +53,3 @@ public class UserLocationManager {
         locationManager.removeUpdates(locationListener);
     }
 
-
-}
