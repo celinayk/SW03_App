@@ -9,16 +9,29 @@
 
     <FrameLayout
         android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="410dp"
+        android:layout_height="550dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
         <Button
             android:id="@+id/seatViewBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="좌석 조회"
-            android:layout_gravity="center">
-        </Button>
+            android:layout_gravity="center"
+            android:text="좌석 조회"></Button>
+
     </FrameLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+</androidx.constraintlayout.widget.ConstraintLayout>
