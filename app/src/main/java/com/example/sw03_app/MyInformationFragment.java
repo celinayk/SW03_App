@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.sw03_app.client.Client;
 import com.example.sw03_app.retrofit.RetroService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -131,6 +132,7 @@ public class MyInformationFragment extends Fragment {
                     //String kakaoUserProfile= user.getKakaoAccount().getProfile().getProfileImageUrl();
                     // 로그인이 성공했을 때만 서버로 데이터 보내기
                     userId = user.getId();
+                    Client.setSns_id(userId);
                     System.out.println(kakaoUserName);
                     sendKakaoUserInfoToServer(kakaoUserName);
 
