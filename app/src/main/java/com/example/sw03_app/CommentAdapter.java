@@ -52,9 +52,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.commentV
         holder.content.setText(comment.getContent());
 
         // Date를 문자열로 변환하여 TextView에 설정
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateString = dateFormat.format(comment.getDate());
-        holder.date.setText(dateString);
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String dateString = dateFormat.format(comment.getDate());
+        holder.date.setText(comment.getDate());
 
     }
 

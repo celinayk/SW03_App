@@ -50,7 +50,6 @@ public class PostDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_post);
-
         FloatingActionButton redoButton = findViewById(R.id.redoButton);
         Button doneButton = findViewById(R.id.comment_done_button);
 
@@ -94,14 +93,8 @@ public class PostDetailActivity extends AppCompatActivity {
                     // 현재 상세 게시글의 boardId값을 가지고옴
                     //int postBoardId = post.getBoardId();
 
+                    getComments(boardId);
 
-                    // 댓글 리사이클러뷰 초기화
-                    comment_recyclerView = findViewById(R.id.comment_recyclerView);
-                    comment_recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-                    // 댓글 어댑터 초기화
-                    commentAdapter = new CommentAdapter(citems);
-                    comment_recyclerView.setAdapter(commentAdapter);
 
                 }
 
@@ -148,7 +141,6 @@ public class PostDetailActivity extends AppCompatActivity {
         for (Board post : items) {
             System.out.println("외부 : boardId = " + boardId + "getBoardId = " + post.getBoardId());
             if (post.getBoardId().toString().equals(boardId.toString())) {
-                getComments(boardId);
                 System.out.println("내부 : boardId = " + boardId + "getBoardId = " + post.getBoardId());
                 return post;
             }
@@ -181,11 +173,23 @@ public class PostDetailActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
                 if(response.isSuccessful()) {
                     ArrayList<Comment> commentsArrayList = response.body();
-                    citems = commentsArrayList;
-
+                    System.out.println("@@items = " + citems.size());
+                    setCitems(commentsArrayList);
+                    System.out.println("**citems = " + citems.size());
                     for (Comment comment : commentsArrayList) {
                         System.out.println(comment);
                     }
+
+                    // 댓글 리사이클러뷰 초기화
+                    comment_recyclerView = findViewById(R.id.comment_recyclerView);
+                    comment_recyclerView.setLayoutManager(new LinearLayoutManager(PostDetailActivity.this));
+
+                    System.out.println("this = " + this);
+                    // 댓글 어댑터 초기화
+
+                    commentAdapter = new CommentAdapter(citems);
+                    comment_recyclerView.setAdapter(commentAdapter);
+
                 } else {
                     System.out.println("FAIL!@!@!");
                 }
@@ -199,4 +203,7 @@ public class PostDetailActivity extends AppCompatActivity {
     }
 
 
+    public void setCitems(ArrayList<Comment> citems) {
+        this.citems = citems;
+    }
 }
