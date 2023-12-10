@@ -37,4 +37,5 @@ public interface RetroService {
     @POST("/api/comment/{board_id}/{sns_id}")
     Call<CommentPost> addComment(@Path("board_id") Integer board_id, @Path("sns_id") Long sns_id, @Body CommentPost commentPost);
 
+    Call<String> saveKakaoUserInfo(Long userId, String authorizationHeader, String kakaoUserName);
 }
