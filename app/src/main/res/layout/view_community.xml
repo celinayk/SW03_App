@@ -38,6 +38,14 @@
                     android:layout_height="48dp"
                     android:background="@drawable/menu"
                     tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck"/>
+
+                <Button
+                        android:text="board delete"
+                        android:id="@+id/delete_board"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/menu"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck"/>
             </LinearLayout>
 
         </RelativeLayout>

@@ -39,7 +39,6 @@ public class UserLocationManager {
         }
 
 
-        //그렇다고 그대로 냅두면 이 앱 왜씀?
         return null;
     }
 
@@ -52,4 +51,4 @@ public class UserLocationManager {
     public void stopLocationUpdates() {
         locationManager.removeUpdates(locationListener);
     }
-
+}

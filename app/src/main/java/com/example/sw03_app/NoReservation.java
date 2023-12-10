@@ -2,6 +2,7 @@ package com.example.sw03_app;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -67,6 +68,9 @@ public class NoReservation extends AppCompatActivity {
 
     private ApiService apiService;
 
+    private CountDownTimer countDownTimer;
+
+
     public static Location getLibraryLocation() {
         Location libraryLocation = new Location("library");
         libraryLocation.setLatitude(35.246440); // Library's latitude
@@ -74,67 +78,6 @@ public class NoReservation extends AppCompatActivity {
         return libraryLocation;
     }
 
-
-    private void startCount(){
-        userLocationManager = new UserLocationManager(NoReservation.this, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                // 위치가 변경될 때마다 실행되는 부분
-            }
-        });
-
-        System.out.println(userLocationManager);
-        System.out.println(userLocationManager.getLastKnownLocation(NoReservation.this));
-
-        new CountDownTimer(ONE_HOUR_IN_MILLIS, ONE_MIN_IN_MILLIS) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-
-                Location libraryLocation = getLibraryLocation();
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                Location currentLocation = userLocationManager.getLastKnownLocation(NoReservation.this);
-
-                System.out.println(currentLocation.getLatitude() + "," + currentLocation.getLongitude());
-                if (currentLocation != null) {
-                    float distance = currentLocation.distanceTo(libraryLocation);
-                    //오차범위 포함 + 10미터
-                    if (distance > 110) {
-                        if(prevChecked){
-                            Toast.makeText(NoReservation.this, "도서관에서 100m 멀어졌어요! 좌석이 취소됩니다", Toast.LENGTH_SHORT).show();
-                            cancelRequest();
-                            return;
-                        }else{
-                            AlertDialog alertDialog = getAlertDialog("도서관에서 100m 멀어졌어요! 10분 안에 복귀해주세요.", "확인");
-                            alertDialog.show();
-                            cancelRequest();
-                        }
-                        prevChecked = true;
-                    } else {
-                        Toast.makeText(NoReservation.this, "디버깅 용 도서관에서 100미터 이내입니다.", Toast.LENGTH_SHORT).show();
-                        prevChecked = false;
-                    }
-                } else {
-                    if(prevChecked == false){
-                        Toast.makeText(NoReservation.this, "위치 정보를 확인할 수 없습니다 위치 정보를 확인해주세요", Toast.LENGTH_SHORT).show();
-                        prevChecked = true;
-                    }else{
-                        Toast.makeText(NoReservation.this, "위치 정보를 확인할 수 없습니다 좌석이 취소됩니다", Toast.LENGTH_SHORT).show();
-                        cancelRequest();
-                        return;
-                    }
-                }
-            }
-
-
-            @Override
-            public void onFinish() {
-                cancelRequest();
-            }
-
-        }.start();
-
-    }
 
 
     @NotNull
@@ -152,29 +95,37 @@ public class NoReservation extends AppCompatActivity {
 
 
     private void cancelRequest() {
-        Toast.makeText(NoReservation.this, "장작", Toast.LENGTH_SHORT).show();
+        Toast.makeText(NoReservation.this, "좌석 취소 코드", Toast.LENGTH_SHORT).show();
+        UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
 
-        // DELETE API 호출
-        String seatUsernameToDelete = "praisebak"; // 삭제할 좌석의 ID
-        Call<Void> call = apiService.deleteSeat(seatUsernameToDelete);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    // 성공적으로 삭제됨
-
-                } else {
-                    //클라이언트에서 서버로 요청을 보내는걸 실패했다? 그럼 어떡해요
-                    // 요청 실패 처리
-                }
-            }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                t.printStackTrace();
-            }
+            public Unit invoke(User user, Throwable throwable) {
+                snsId = user.getId();
 
+                Call<Void> call = retrofitService.deleteSeat(snsId);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            // 성공적으로 삭제됨
+
+                        } else {
+                            //클라이언트에서 서버로 요청을 보내는걸 실패했다? 그럼 어떡해요
+                            // 요청 실패 처리
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+
+                });
+                return null;
+            }
         });
+
     }
 
 
@@ -221,9 +172,9 @@ public class NoReservation extends AppCompatActivity {
                         // 서버에 예약 요청 보내는 부분
                         startCount();
 
-//                        sendReservationRequest();
-//                        saveReservedSeatToSharedPreferences();
-//                        exitCurrentPage();
+                        sendReservationRequest();
+                        saveReservedSeatToSharedPreferences();
+                        exitCurrentPage();
 
                         return null;
                     }
@@ -250,6 +201,83 @@ public class NoReservation extends AppCompatActivity {
         });
     }
 
+    private void startCount() {
+        Log.d("Debug", "Inside startCount() function");
+
+        // 기존에 실행 중이던 타이머가 있다면 취소
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+
+        userLocationManager = new UserLocationManager(NoReservation.this, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                // 위치가 변경될 때마다 실행되는 부분
+            }
+        });
+
+        if (userLocationManager != null) {
+            Location currentLocation = userLocationManager.getLastKnownLocation(NoReservation.this);
+            // 위치 정보 사용
+        }
+
+        System.out.println(userLocationManager);
+        System.out.println(userLocationManager.getLastKnownLocation(NoReservation.this));
+
+        // CountDownTimer 객체 생성
+        countDownTimer = new CountDownTimer(ONE_HOUR_IN_MILLIS, ONE_MIN_IN_MILLIS) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.d("Debug", "Inside onTick() function");
+
+                Location libraryLocation = getLibraryLocation();
+                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                Location currentLocation = userLocationManager.getLastKnownLocation(NoReservation.this);
+
+                System.out.println(currentLocation.getLatitude() + "," + currentLocation.getLongitude());
+                if (currentLocation != null) {
+                    float distance = currentLocation.distanceTo(libraryLocation);
+                    //오차범위 포함 + 10미터
+                    if (distance > 110) {
+                        if (prevChecked) {
+                            Toast.makeText(NoReservation.this, "도서관에서 100m 멀어졌어요! 좌석이 취소됩니다", Toast.LENGTH_SHORT).show();
+                            cancelRequest();
+                            cancel(); // 타이머 취소
+                            return;
+                        } else {
+                            Toast.makeText(NoReservation.this, "도서관에서 100m 멀어졌어요! 돌아와 주세요", Toast.LENGTH_SHORT).show();
+                            cancelRequest();
+                            cancel(); // 타이머 취소
+                        }
+                        prevChecked = true;
+                    } else {
+                        Toast.makeText(NoReservation.this, "디버깅 용 도서관에서 100미터 이내입니다.", Toast.LENGTH_SHORT).show();
+                        prevChecked = false;
+                    }
+                } else {
+                    if (prevChecked == false) {
+                        Toast.makeText(NoReservation.this, "위치 정보를 확인할 수 없습니다 위치 정보를 확인해주세요", Toast.LENGTH_SHORT).show();
+                        prevChecked = true;
+                    } else {
+                        Toast.makeText(NoReservation.this, "위치 정보를 확인할 수 없습니다 좌석이 취소됩니다", Toast.LENGTH_SHORT).show();
+                        cancelRequest();
+                        cancel(); // 타이머 취소
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                cancelRequest(); // 위치 벗어나면 delete API 호출
+                cancel(); // 타이머 취소
+            }
+        };
+
+        countDownTimer.start(); // 타이머 시작
+    }
+
+
     private void saveReservedSeatToSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences("isSeatReserved", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -265,7 +293,6 @@ public class NoReservation extends AppCompatActivity {
 
     private void sendReservationRequest() {
         // 서버에 예약 요청을 보내는 부분
-
         Intent intent = getIntent();
         if (intent != null) {
             seatId = intent.getLongExtra("seatId", -1);

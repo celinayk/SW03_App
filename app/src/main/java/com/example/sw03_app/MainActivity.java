@@ -1,7 +1,10 @@
 package com.example.sw03_app;
 
+import android.Manifest;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,8 +24,11 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.kakao.sdk.common.util.Utility;
+import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
 import org.jetbrains.annotations.NotNull;
 
 import retrofit2.Call;
@@ -229,24 +235,34 @@ public class MainActivity extends AppCompatActivity {
     private void cancelRequest() {
         Toast.makeText(MainActivity.this, "장작", Toast.LENGTH_SHORT).show();
 
-        // DELETE API 호출
-        Call<Void> call = retrofitService.deleteSeat(snsId);
-        call.enqueue(new Callback<Void>() {
+        UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    // 성공적으로 삭제됨
+            public Unit invoke(User user, Throwable throwable) {
 
-                } else {
-                    //클라이언트에서 서버로 요청을 보내는걸 실패했다? 그럼 어떡해요
-                    // 요청 실패 처리
-                }
-            }
+                // DELETE API 호출
+                Call<Void> call = retrofitService.deleteSeat(user.getId());
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            // 성공적으로 삭제됨
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                t.printStackTrace();
+                        } else {
+                            //클라이언트에서 서버로 요청을 보내는걸 실패했다? 그럼 어떡해요
+                            // 요청 실패 처리
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+                return null;
             }
         });
+
+
+
     }
 }

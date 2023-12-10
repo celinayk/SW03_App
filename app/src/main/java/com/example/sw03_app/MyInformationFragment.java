@@ -12,9 +12,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.example.sw03_app.client.Client;
-import com.example.sw03_app.retrofit.RetroService;
-import com.example.sw03_app.retrofit.RetrofitClient;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
@@ -29,10 +26,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 
 public class MyInformationFragment extends Fragment {
@@ -80,8 +73,6 @@ public class MyInformationFragment extends Fragment {
                 if (throwable != null) {
                     // TBO
                 }
-                // 카카오 로그인 상태에 따라 UI 업데이트
-                updateKakaoLoginStatus(UserApiClient.getInstance().isKakaoTalkLoginAvailable(requireContext()));
                 return null;
             }
         };
@@ -111,9 +102,6 @@ public class MyInformationFragment extends Fragment {
                 });
             }
         });
-
-        kakaoLogin();
-
         return view;
     }
 
@@ -144,31 +132,6 @@ public class MyInformationFragment extends Fragment {
                     userId = user.getId();
                     System.out.println(kakaoUserName);
                     sendKakaoUserInfoToServer(kakaoUserName);
-
-                    Client.setSns_id(user.getId()); // sns_id 저장
-
-                    /* 서버에 유저 등록 요청 */
-                    Retrofit retrofit = RetrofitClient.getClient();
-                    RetroService inquiryRetrofit = retrofit.create(RetroService.class);
-                    Call<String> inquiry = inquiryRetrofit.addUser(user.getId(), user.getKakaoAccount().getProfile().getNickname());
-                    System.out.println("zz = " + user.getKakaoAccount().getProfile().getNickname());
-                    inquiry.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            if(response.isSuccessful()) {
-                                String body = response.body();
-                                System.out.println("UserPost Success");
-                            } else {
-                                System.out.println("UserPost fail");
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            System.out.println("t = " + t.getMessage());
-                        }
-                    });
-
 
                     Log.i(TAG, "invoke : id = " + user.getId());
                     Log.i(TAG, "invoke : id = " + user.getKakaoAccount().getProfile());
