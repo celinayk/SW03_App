@@ -104,7 +104,7 @@ public class YesReservation extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "네트워크 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "연장은 한 번만 가능합니다.", Toast.LENGTH_SHORT).show();
                     }
                 });
                 exitCurrentPage();

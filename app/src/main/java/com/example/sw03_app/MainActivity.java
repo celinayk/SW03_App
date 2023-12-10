@@ -113,6 +113,11 @@ public class MainActivity extends AppCompatActivity {
     private void startCount() {
         Log.d("Debug", "Inside startCount() function");
 
+        // 기존에 실행 중이던 타이머가 있다면 취소
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+
         userLocationManager = new UserLocationManager(MainActivity.this, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
