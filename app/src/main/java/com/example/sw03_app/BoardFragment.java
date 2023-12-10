@@ -12,6 +12,7 @@ import java.util.Date;
 import androidx.fragment.app.Fragment;
 
 import com.example.sw03_app.dto.Board;
+import com.example.sw03_app.dto.Comment;
 import com.example.sw03_app.retrofit.RetroService;
 import com.example.sw03_app.retrofit.RetrofitClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,6 +39,7 @@ public class BoardFragment extends Fragment {
     }
 
     ArrayList<Board> items = new ArrayList<>();
+    ArrayList<Comment> comments = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class BoardFragment extends Fragment {
         community_recyclerView = view.findViewById(R.id.community_recyclerView);
         community_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        postAdapter = new PostAdapter(items, this);
+        postAdapter = new PostAdapter(items, comments,this);
 
         Retrofit retrofit = RetrofitClient.getClient();
         RetroService inquiryRetrofit = retrofit.create(RetroService.class);

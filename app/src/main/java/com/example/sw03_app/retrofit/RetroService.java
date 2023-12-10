@@ -2,6 +2,8 @@ package com.example.sw03_app.retrofit;
 
 import com.example.sw03_app.dto.Board;
 import com.example.sw03_app.dto.BoardPost;
+import com.example.sw03_app.dto.Comment;
+import com.example.sw03_app.dto.CommentPost;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,5 +30,11 @@ public interface RetroService {
 
     @POST("/api/user/{sns_id}")
     Call<String> addUser(@Path("sns_id") Long sns_id, @Body String nickname);
+
+    @GET("/api/comment/{board_id}")
+    Call<ArrayList<Comment>> getComments(@Path("board_id") Integer board_id);
+
+    @POST("/api/comment/{board_id}/{sns_id}")
+    Call<CommentPost> addComment(@Path("board_id") Integer board_id, @Path("sns_id") Long sns_id, @Body CommentPost commentPost);
 
 }

@@ -12,17 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.sw03_app.dto.Board;
+import com.example.sw03_app.dto.Comment;
 
 import java.util.ArrayList;
 
 // RecyclerView에 데이터를 제공하고 표시하기 위한 뷰를 생성하는 파일
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder> {
     private ArrayList<Board> localDataSet;
+    private ArrayList<Comment> commentDataSet; //댓글 데이터 추가
     private AdapterView.OnItemClickListener itemClickListener;
 
     // 생성자 통해 데이터를 전달받고 이걸 localDataSet에 저장한다
-    public PostAdapter (ArrayList<Board> dataSet, BoardFragment boardFragment) {
+    public PostAdapter (ArrayList<Board> dataSet,ArrayList<Comment> commentData, BoardFragment boardFragment) {
         this.localDataSet = dataSet;
+        this.commentDataSet = commentData;
     }
 
     // viewholer 생성 밑 뷰 연결
@@ -60,6 +63,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),PostDetailActivity.class);
                 intent.putExtra("boardId", post.getBoardId());
+
+                // 클릭된 게시글의 id에 해당하는 댓글 데이터 가져오기
+                ArrayList<Comment> comments =getCommentsForPost(post.getBoardId());
+
+                intent.putParcelableArrayListExtra("comments", comments);
                 intent.putParcelableArrayListExtra("items", new ArrayList<>(localDataSet));  // 전체 데이터를 전달
 
                 v.getContext().startActivity(intent);
@@ -87,18 +95,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.postViewHolder
         return localDataSet.size();
     }
 
+    // 게시글 ID에 해당하는 댓글 데이터 가져오기
+    private ArrayList<Comment> getCommentsForPost(int boardId) {
+        // 실제로는 서버에서 데이터를 가져오는 로직이 들어가야 함
+        // 여기에서는 임의의 테스트 데이터를 사용
 
-    // 특정 게시글에 대한 댓글 필터링 메서드
-  /*private ArrayList<CommentInfo> filterCommentsByPost(int boardId) {
-        ArrayList<CommentInfo> filteredComments = new ArrayList<>();
+        ArrayList<Comment> result = new ArrayList<>();
 
-        filteredComments.add(new CommentInfo(1, "댓글1", new Date(System.currentTimeMillis()), 1));
-        filteredComments.add(new CommentInfo(2, "댓글2", new Date(System.currentTimeMillis()), 1));
-        filteredComments.add(new CommentInfo(3, "댓글3", new Date(System.currentTimeMillis()), 2));
+        for (Comment comment : commentDataSet) {
+            if (comment.getBoardId() == boardId) {
+                result.add(comment);
+            }
+        }
 
-        return filteredComments;
+        return result;
     }
-*/
+
 
         // 뷰홀더 클래스, 뷰홀더에 필요한 데이터들
         public static class postViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

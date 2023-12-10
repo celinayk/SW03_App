@@ -9,7 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Comment;
+
+import com.example.sw03_app.dto.Comment;
 
 import java.util.ArrayList;
 
@@ -17,10 +18,11 @@ import java.util.ArrayList;
 // RecyclerView에 데이터를 제공하고 표시하기 위한 뷰를 생성하는 파일
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.commentViewHolder> {
 
-    private ArrayList<CommentInfo> localDataSet;
+    private ArrayList<Comment> localDataSet;
 
     // 생성자 통해 데이터를 전달받고 이걸 localDataSet에 저장한다
-    public CommentAdapter (ArrayList<CommentInfo> dataSet) {
+    public CommentAdapter (ArrayList<Comment> dataSet) {
+
         this.localDataSet = dataSet;
     }
 
@@ -45,8 +47,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.commentV
     @Override
     public void onBindViewHolder(@NonNull commentViewHolder holder, int position) {
 
-        CommentInfo comment = localDataSet.get(position);
-        holder.commentId.setText(comment.getCommentId());
+        Comment comment = localDataSet.get(position);
+        holder.writer.setText(comment.getWriter());
         holder.content.setText(comment.getContent());
 
         // Date를 문자열로 변환하여 TextView에 설정
@@ -62,17 +64,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.commentV
         return localDataSet.size();
     }
 
+
     // 뷰홀더 클래스, 뷰홀더에 필요한 데이터들
     public static class commentViewHolder extends RecyclerView.ViewHolder {
 
         // 뷰 홀더에 필요한 데이터들
-        private TextView commentId;
+        private TextView writer;
         private TextView content;
         private TextView date;
 
         public commentViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.commentId = itemView.findViewById(R.id.commentWriterView);
+            this.writer= itemView.findViewById(R.id.commentWriterView);
             this.content = itemView.findViewById(R.id.commentView);
             this.date = itemView.findViewById(R.id.commentDateView);
         }
