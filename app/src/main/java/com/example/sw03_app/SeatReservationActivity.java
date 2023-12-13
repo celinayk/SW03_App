@@ -29,7 +29,7 @@ public class SeatReservationActivity extends AppCompatActivity {
     private static final long ONE_HOUR_IN_MILLIS = 60 * 60 * 1000;
 
     //6초
-    private static final long ONE_MIN_IN_MILLIS = 6 * 1000;
+    private static final long ONE_MIN_IN_MILLIS = 6000 * 1000;
 
     private static final int PERMISSION_REQUEST_CODE = 1001;
 
