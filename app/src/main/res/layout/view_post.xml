@@ -206,8 +206,9 @@
                         android:elevation="0dp"
                         android:text="완료"
                         android:textColor="#f27500"
-                        android:textSize="14sp" />
+                        android:textSize="14sp">
 
+                    </Button>
                 </LinearLayout>
 
                 <LinearLayout

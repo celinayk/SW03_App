@@ -8,14 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sw03_app.client.Client;
 import com.example.sw03_app.dto.Board;
 import com.example.sw03_app.dto.Comment;
+import com.example.sw03_app.dto.CommentPost;
 import com.example.sw03_app.retrofit.RetroService;
 import com.example.sw03_app.retrofit.RetrofitClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -86,22 +89,9 @@ public class PostDetailActivity extends AppCompatActivity {
                     //dateTextView.setText("작성일: " + post.getDate().toString());
 
 
-
-                   // System.out.println("테스트 boardId: " + boardId);
-                    //System.out.println("테스트 citems: " + citems);
-
-                    // 현재 상세 게시글의 boardId값을 가지고옴
-                    //int postBoardId = post.getBoardId();
-
                     getComments(boardId);
 
-
                 }
-
-                //View view = inflater.inflate(R.layout.comment_recyclerView, )
-                // 댓글 리사이클러뷰 게시글 상세정보 밑에 보여준다
-                //setContentView(comment_recyclerView);
-
 
 
                 // 상세 게시글에서 뒤로가기 버튼을 누르면 다시 게시글 목록으로 돌아간다
@@ -119,12 +109,23 @@ public class PostDetailActivity extends AppCompatActivity {
                 });
 
 
-                // 댓글 완료 버튼을 누르면 이 페이지를 다시 보여준다
+
+
+                // 댓글 완료 버튼을 누르면 이 페이지를 다시 보여준다, 새로고침
                 doneButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // titleEditText(댓글작성칸 id)에 쓴 댓글이 디비에 올라가고
-                        // 페이지는 여전히 이 페이지를 보여준다
+                        // titleEditText(댓글작성칸 id)에 쓴 댓글이 디비에 올라가고 (승민이가 작성함~)
+                        String content = ((EditText) findViewById(R.id.titleEditText)).getText().toString();
+                        System.out.println("Client.getSns_id() = " + Client.getSns_id());
+                        System.out.println("content = " + content);
+                        //addComment(boardId, Client.getSns_id(), content);
+                        addComment(boardId, 1234L, content);
+                        // 다시 헤당 페이지를 새로고침 호출할 때
+                        finish();
+                        Intent intent = getIntent();
+                        startActivity(intent);
+
 
                     }
 
@@ -135,6 +136,34 @@ public class PostDetailActivity extends AppCompatActivity {
 
                 }
             }
+
+    void addComment(Integer board_id, Long sns_id, String content) {
+        Retrofit retrofit = RetrofitClient.getClient();
+        RetroService inquiryRetrofit = retrofit.create(RetroService.class);
+
+        CommentPost commentPost = new CommentPost();
+        commentPost.setContent(content);
+
+        Call<String> inquiry = inquiryRetrofit.addComment(board_id, sns_id, commentPost);
+        inquiry.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()) {
+                    String body = response.body();
+                    System.out.println("body = " + body);
+                    System.out.println("CommentPost Success");
+                } else {
+                    System.out.println("CommentPost fail");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                System.out.println("t = " + t.getMessage());
+            }
+        });
+
+    }
 
 
     private Board getPostsByBoardId(Integer boardId,ArrayList<Board> items ) {
@@ -148,19 +177,6 @@ public class PostDetailActivity extends AppCompatActivity {
         return null; // 해당 ID에 맞는 게시글이 없을 경우
 
     }
-/*
-    // 게시글 id에 해당하는 댓글들만 반환하는 메서드 추가
-    private ArrayList<CommentInfo> getCommentByBoardId(int boardId, ArrayList<CommentInfo> allComments) {
-        ArrayList<CommentInfo> comments = new ArrayList<>();
-        for(CommentInfo comment : allComments) {
-            System.out.println("Comment: " + comment.getBoardId());
-            if(boardId == comment.getBoardId()) {
-                comments.add(comment);
-            }
-        }
-        return comments;
-    }
-*/
 
     public void getComments(Integer board_id) {
 
@@ -180,7 +196,7 @@ public class PostDetailActivity extends AppCompatActivity {
                         System.out.println(comment);
                     }
 
-                    // 댓글 리사이클러뷰 초기화
+                    // 댓글 리사이클러뷰 초기화, 비동기식으로처리?해야해서 콜백함수 안에서 호출?
                     comment_recyclerView = findViewById(R.id.comment_recyclerView);
                     comment_recyclerView.setLayoutManager(new LinearLayoutManager(PostDetailActivity.this));
 
